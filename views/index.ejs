@@ -4,7 +4,7 @@
   <div class="col-md-4 col-md-offset-4">
   <h1>Welcome to <%= title %></h1>
 
-  <form action="/results" method="POST">
+  <form action="/results" method="get">
     <div class="form-group">
         <label for="search">Search Movie Title...</label>
         <input type="text" name="search" class="form-control">
@@ -40,6 +40,7 @@
             <% var title = movie["Title"] %>
             <% var poster = movie["Poster"] %>
             </div>
+        <button class="btn btn-primary">Add Movie</button>
         </div>
         </div>
     <% }; %>
