@@ -1,19 +1,20 @@
 var express = require('express');
 var router = express.Router();
-var csrf = require('csurf');
-var passport = require('passport');
-
 var request = require('request'); 
 
-var Movies = require('../models/movies');
-
-var csrfProtection = csrf();
-router.use(csrfProtection);
+var Pool = require('../models/pool');
+var Movie = require('../models/movies');
 
 router.get('/', function(req, res, next) {
-  // var Movies = 
-  var data;
-  res.render('index', { title: 'Flick Pick', data: data });
+    var data;
+    console.log(req.session);
+    var movies = Movie.find(function(err, docs){
+    console.log(req.session);
+    if(!req.session.pool){
+         var pool = new Pool(req.session.pool = {});
+    }
+    res.render('index', { title: 'Flick Pick', data: data, movies: docs });
+    });
 });
 
 router.get('/results', function(req, res, next) {
@@ -31,32 +32,35 @@ router.get('/results', function(req, res, next) {
     });
 });
 
-router.get('/user/signup', function(req, res, next){
-    var messages = req.flash('error');
-    res.render('user/signup', {csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});
+router.get('/add-to-moviepool/:id', function(req, res, next) {
+    var movieId = req.params.id;
+    var pool = new Pool(req.session.pool ? req.session.pool : {});
+    var movies = [
+        new Movie({ 
+            imdbID: movieId,
+        })
+    ];
+    console.log(movies);
+    pool.add(movieId);
+    req.session.pool = pool;
+    res.redirect('/');
+
 });
 
-router.post('/user/signup', passport.authenticate('local.signup', {
-    successRedirect: '/user/profile',
-    failureRedirect: '/user/signup',
-    failureFlash: true
-}));
-
-router.get('/user/profile', function(req, res, next) {
-    res.render('user/profile');
+router.get('/movie-pool', function(req, res, next) {
+    if(!req.session.pool) {
+        return res.render('movie-pool', {movies: null});
+    }
+    var pool = new Pool(req.session.pool);
+    res.render('movie-pool', {movies: pool.generateArray(), totalImage: pool.totalImage});
 });
-
-router.get('/user/signin', function(req, res, next) {
-    var messages = req.flash('error');
-    res.render('user/signin', {csrfToken: req.csrfToken(), messages: messages, hasErrors: messages.length > 0});
-});
-
-router.post('/user/signin', passport.authenticate('local.signin', {
-    successRedirect: '/user/profile',
-    failureRedirect: '/user/signin',
-    failureFlash: true
-}));
 
 module.exports = router;
 
-
+function isLoggedIn(req, res, next) {
+    if(req.isAuthenticated()) {
+        return next();
+    }
+    req.session.oldUrl = req.url;
+    res.redirect('/user/signin');
+};
