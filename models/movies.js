@@ -5,6 +5,8 @@ var schema = new Schema({
 	// title: {type: String, required: true},
 	// year: {type: String, required: true},
 	imdbID: {type: String, required: true},
+	// title: {type: String, required: true},
+	detailBody: {type: Object, required: true},
 	id : {type: String, required: true}
 	// posterPath: {type: String, required: true}
 });

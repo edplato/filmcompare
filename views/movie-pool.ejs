@@ -1,15 +1,18 @@
 <%- include('partials/header.ejs'); %>
 
-<% if(movie) { %>
+<% if(movies) { %>
 <div class="row">
 	 <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
 	 	<ul class="list-group">
-	 	<% movie.forEach(function(movie) { %>
+	 	<% movies.forEach(function(movie) { %>
 	 		<li class="list-group-item">
-	 			<span class="badge"><%= movie.qty %></span>
-	 			<img class="headerTinyPoster" src="<%= movie.item.imagePath %>"/>
-	 			<strong><%= movie.item.title %></strong>
-	 			<span class="label label-success"><%= movie.item.description %></span>
+
+	 			
+	 			<h3><%= movie.movieId[0].detailBody.Title %></h3>
+	 			<strong><%= movie.movieId[0].detailBody.imdbID %></strong>
+	 			<p><%= movie.movieId[0].detailBody.Plot %></p>
+	 			<p><%= movie.movieId[0].detailBody.tomatoMeter %></p>
+	 			
 	 			<div class="btn-group">
 	 				<button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action <span class="caret"></span></button>	
 	 				<ul class="dropdown-menu">
@@ -24,7 +27,7 @@
 </div>
 <div class="row">
 	 <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-	 	<img src="<%= totalImage %>"/>
+	 	<img src=""/>
 	 </div>
 </div>
 <hr>
