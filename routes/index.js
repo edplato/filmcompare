@@ -7,9 +7,7 @@ var Movie = require('../models/movies');
 
 router.get('/', function(req, res, next) {
     var data;
-    // console.log(req.session);
     var movies = Movie.find(function(err, docs){
-    // console.log(req.session);
     if(!req.session.pool){
          var pool = new Pool(req.session.pool = {});
     }
@@ -34,8 +32,7 @@ router.get('/results', function(req, res, next) {
 
 router.get('/add-to-moviepool/:id', function(req, res, next) {
     var movieId = req.params.id;
-    // console.log("HERE IS movieId " + movieId);
-    var url = "http://www.omdbapi.com/?i=" + movieId + "&tomatoes=true";
+    var url = "http://www.omdbapi.com/?i=" + movieId;
 
     request(url, function(error, response, body){
             if(!error && response.statusCode == 200) {
@@ -43,37 +40,15 @@ router.get('/add-to-moviepool/:id', function(req, res, next) {
              if(!parsedbody["Response"] || parsedbody["Response"] === "False"){
                 res.redirect("/");
              } else {
-                // var movieDetail = {
-                //     "Title": parsedbody["Title"]
-                //     "Year": parsedbody["Year"],
-                //     "Rated": parsedbody["Rated"],
-                //     "Runtime": parsedbody["Runtime"],
-                //     "Genre": parsedbody["Genre"],
-                //     "Director": parsedbody["Director"],
-                //     "Actors": parsedbody["Actors"],
-                //     "Plot": parsedbody["Plot"],
-                //     "Awards": parsedbody["Awards"],
-
-                //     // "Poster": parsedbody["Poster"],
-                //     // "Metascore": parsedbody["Metascore"],
-                //     // "imdbID": parsedbody["imdbID"],
-                //     // "imdbRating": parsedbody["imdbRating"],
-                //     // "imdbVotes": parsedbody["imdbVotes"],
-                //     // "tomatoMeter": parsedbody["tomatoMeter"],
-                //     // "tomatoURL": parsedbody["tomatoURL"],
-                //     // "test" : test
-                // };
-
+      
     var pool = new Pool(req.session.pool ? req.session.pool : {});
     var movies = [
         new Movie({ 
             imdbID: movieId,
             detailBody: parsedbody
-            // title: movieDetail.Title
         })
     ];
-    // console.log("MOVIES AFTER ADDITION: " + movies);
-    pool.add(movies);
+    pool.add(movies, movieId);
     req.session.pool = pool;
     res.redirect('/');
              }

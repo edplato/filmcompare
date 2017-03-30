@@ -1,10 +1,10 @@
 module.exports = function Pool(oldPool) {
 	this.items = oldPool.items || {};
 
-	this.add = function(parsedBody) {
-		var storedItem = this.items[parsedBody];
+	this.add = function(parsedBody, id) {
+		var storedItem = this.items[id];
 		if(!storedItem) {
-			storedItem = this.items[parsedBody] = {movieId: parsedBody};
+			storedItem = this.items[id] = {movieId: parsedBody};
 			
 		}
 		//add more accessible items????
@@ -13,8 +13,8 @@ module.exports = function Pool(oldPool) {
 
 	this.generateArray = function() {
 		var arr = [];
-		for(var parsedBody in this.items) {
-			arr.push(this.items[parsedBody]);
+		for(var id in this.items) {
+			arr.push(this.items[id]);
 		}
 		return arr;
 	};

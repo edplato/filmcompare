@@ -1,52 +1,58 @@
 <%- include('partials/header.ejs'); %>
 
+<div class="container">
 <% if(movies) { %>
 <div class="row">
-	 <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-	 	<ul class="list-group">
-	 	<% movies.forEach(function(movie) { %>
-	 		<li class="list-group-item">
-
-	 			
-	 			<h3><%= movie.movieId[0].detailBody.Title %></h3>
-	 			<strong><%= movie.movieId[0].detailBody.imdbID %></strong>
-	 			<p><%= movie.movieId[0].detailBody.Plot %></p>
-	 			<p><%= movie.movieId[0].detailBody.tomatoMeter %></p>
-	 			
-	 			<div class="btn-group">
-	 				<button class="btn btn-primary btn-xs dropdown-toggle" type="button" data-toggle="dropdown">Action <span class="caret"></span></button>	
-	 				<ul class="dropdown-menu">
-	 					<li><a href="#">Reduce by 1</a></li>
-	 					<li><a href="#">Remove Item</a></li>
-	 				</ul>
-	 			</div>
-	 		</li>
-	 		<% }); %>
-	 	</ul>
-	 </div>
+<% movies.forEach(function(movie) { %>
+	<div class="container-fluid col-md-6">
+		<div class="hidden-lg hidden-md hidden-sm visible-xs">
+		<% var movieMin = movie.movieId[0].detailBody %>
+	<h3><strong><%= movie.movieId[0].detailBody.Title %></strong> (<%= movie.movieId[0].detailBody.Year %>)</h3>
 </div>
-<div class="row">
-	 <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-	 	<img src=""/>
-	 </div>
+  <div class="thumbnail col-sm-6 col-xs-12 visible-lg visible-md visible-sm hidden-xs">
+  	<img class="poster" src="<%= movie.movieId[0].detailBody.Poster %>" alt="Movie Poster">
+  </div>
+   <div class="thumbnail col-sm-6 hidden-lg hidden-md hidden-sm visible-xs searchImgSmall">
+    <img class="posterSmall" src="<%= movie.movieId[0].detailBody.Poster %>" alt="Movie Poster">
+  </div>
+
+  <div class="col-sm-6 col-xs-12">
+
+    <div class="searchMovieInfo">
+	<div class="visible-lg visible-md visible-sm hidden-xs">
+<h4><strong><%= movie.movieId[0].detailBody.Title %></strong> (<%= movie.movieId[0].detailBody.Year %>)</h4>
+
 </div>
-<hr>
-<div class="row">
-	 <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-	 	<a href="/checkout" type="button" class="btn btn-success">Checkout</a>
-	 </div>
+	<h6><%= movie.movieId[0].detailBody.Genre %></h6>
+	<h6>Runtime: <%= movie.movieId[0].detailBody.Runtime %>  <span class="label label-default"><%= movie.movieId[0].detailBody.Rated %></span>    </h6>
+	</div>
+
+	
+	<div>
+	<p><%= movie.movieId[0].detailBody.Plot %> </p>
+	<p>Directed By: <%= movie.movieId[0].detailBody.Director %> </p>
+	<p>Stars: <%= movie.movieId[0].detailBody.Actors %> </p>
+	</div>
+	
+	<h6>IMDB: <%= movie.movieId[0].detailBody.imdbRating %> / <%= movie.movieId[0].detailBody.imdbVotes %> votes</h6>
+	
+	<h6><%= movieMin.Ratings[0].Source %>: <%= movieMin.Ratings[0].Value %></h6>
+
+	<h6><%= movieMin.Ratings[1].Source %>: <%= movieMin.Ratings[1].Value %></h6>
+
+
+	<p><a href="http://www.imdb.com/title/<%= movie.movieId[0].detailBody.imdbID %>/" class="btn btn-primary" role="button" target="_blank">IMDB</a>
+	<p><a href="#" class="btn btn-primary" role="button" target="_blank">REMOVE</a>
+	<p><a href="#" class="btn btn-primary" role="button" target="_blank">WATCH LATER</a>
+
+
+  </div>
+
 </div>
 
 
-
-<%	} else { %>
-<div class="row">
-	 <div class="col-sm-6 col-md-6 col-md-offset-3 col-sm-offset-3">
-	 	<h2>No Items In Cart</h2>
-	 </div>
+<% }); %>
 </div>
-
 <%	}; %>
-
-
+</div>
 <%- include('partials/footer.ejs'); %>
