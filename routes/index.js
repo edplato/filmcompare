@@ -44,6 +44,7 @@ router.get('/add-to-moviepool/:id', function(req, res, next) {
     var pool = new Pool(req.session.pool ? req.session.pool : {});
     var movies = [
         new Movie({ 
+            poster: parsedbody.Poster,
             imdbID: movieId,
             detailBody: parsedbody
         })
@@ -54,6 +55,14 @@ router.get('/add-to-moviepool/:id', function(req, res, next) {
              }
             }
         });
+});
+
+router.get('/remove/:id', function(req, res, next) {
+    var movieId = req.params.id;
+    var pool = new Pool(req.session.pool ? req.session.pool : {});
+    pool.removeItem(movieId);
+    req.session.pool = pool;
+    res.redirect('/movie-pool');
 });
 
 router.get('/movie-pool', function(req, res, next) {

@@ -2,7 +2,7 @@
 
 <div class="container">
 <div class="row">
-  <div class="col-md-4 col-md-offset-4">
+  <div class="col-md-6 col-md-offset-3">
   <h1>Welcome to <%= title %></h1>
 
   <form action="/results" method="get">
@@ -22,13 +22,12 @@
     <% if(!data.Response || data.Response === "False"){ %>
         <% action="/"; %>
         <% } %>
-   <!-- console.log(data["Response"]); -->
     <% data["Search"].forEach(function(movie) { %>
     <% if(movie["Type"] === "movie"){ %>
         <div class="col-sm-6 col-md-3">
         <div class="thumbnail">
             <% if(movie["Poster"] === "N/A"){ %>
-            <img class="poster" src="http://daddyforever.com/postimages/2016/Kubo-monkey.jpg">
+            <img class="poster" src="http://s3.amazonaws.com/static.betaeasy.com/screenshot/456/456-25984-14192637741419263774.42.jpeg">
             <% } else { %>
             <img class="poster" src="<%=movie["Poster"] %>">
             <% }; %>
@@ -42,12 +41,8 @@
             <% var title = movie["Title"] %>
             <% var poster = movie["Poster"] %>
             <% var year = movie["Year"] %>
-            
-            <!-- var movieData = {title: {title}, year: {year}, imdb: {imdb}, poster: {poster}};  -->
-  
             </div>
             
-
         <a href="/add-to-moviepool/<%=movieId%>" class="btn btn-primary" role="button">Add Movie</a>
         </div>
         </div>

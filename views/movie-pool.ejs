@@ -6,46 +6,51 @@
 <% movies.forEach(function(movie) { %>
 	<div class="container-fluid col-md-6">
 		<div class="hidden-lg hidden-md hidden-sm visible-xs">
-		<% var movieMin = movie.movieId[0].detailBody %>
-	<h3><strong><%= movie.movieId[0].detailBody.Title %></strong> (<%= movie.movieId[0].detailBody.Year %>)</h3>
+		<% var movieMin = movie.movieDetails[0].detailBody %>
+	<h3><strong><%= movieMin.Title %></strong> (<%= movieMin.Year %>)</h3>
 </div>
+	<% if(!movieMin.Poster || movieMin.Poster == 'N/A'){ %>
+		<% var poster = "http://s3.amazonaws.com/static.betaeasy.com/screenshot/456/456-25984-14192637741419263774.42.jpeg" %>
+	<% 	} else {  %>
+		<% var poster = movieMin.Poster %>
+	<% }; %>
   <div class="thumbnail col-sm-6 col-xs-12 visible-lg visible-md visible-sm hidden-xs">
-  	<img class="poster" src="<%= movie.movieId[0].detailBody.Poster %>" alt="Movie Poster">
+  	<img class="poster" src="<%= poster %>" alt="Movie Poster">
   </div>
    <div class="thumbnail col-sm-6 hidden-lg hidden-md hidden-sm visible-xs searchImgSmall">
-    <img class="posterSmall" src="<%= movie.movieId[0].detailBody.Poster %>" alt="Movie Poster">
+    <img class="posterSmall" src="<%= poster %>" alt="Movie Poster">
   </div>
 
   <div class="col-sm-6 col-xs-12">
 
     <div class="searchMovieInfo">
 	<div class="visible-lg visible-md visible-sm hidden-xs">
-<h4><strong><%= movie.movieId[0].detailBody.Title %></strong> (<%= movie.movieId[0].detailBody.Year %>)</h4>
+<h4><strong><%= movieMin.Title %></strong> (<%= movieMin.Year %>)</h4>
 
 </div>
-	<h6><%= movie.movieId[0].detailBody.Genre %></h6>
-	<h6>Runtime: <%= movie.movieId[0].detailBody.Runtime %>  <span class="label label-default"><%= movie.movieId[0].detailBody.Rated %></span>    </h6>
+	<h6><%= movieMin.Genre %></h6>
+	<h6>Runtime: <%= movieMin.Runtime %>  <span class="label label-default"><%= movieMin.Rated %></span>    </h6>
 	</div>
 
-	
 	<div>
-	<p><%= movie.movieId[0].detailBody.Plot %> </p>
-	<p>Directed By: <%= movie.movieId[0].detailBody.Director %> </p>
-	<p>Stars: <%= movie.movieId[0].detailBody.Actors %> </p>
+	<p><%= movieMin.Plot %> </p>
+	<h6><strong>Directed By:</strong> <%= movieMin.Director %> </h6>
+	<h6><strong>Written By:</strong> <%= movieMin.Writer %> </h6>
+	<h6><strong>Stars:</strong> <%= movieMin.Actors %> </h6>
 	</div>
 	
-	<h6>IMDB: <%= movie.movieId[0].detailBody.imdbRating %> / <%= movie.movieId[0].detailBody.imdbVotes %> votes</h6>
+	<h6>IMDB: <%= movieMin.imdbRating %> / <%= movieMin.imdbVotes %> votes</h6>
 	
+	<% if(movieMin.Ratings[0]) { %>
 	<h6><%= movieMin.Ratings[0].Source %>: <%= movieMin.Ratings[0].Value %></h6>
-
+	
 	<h6><%= movieMin.Ratings[1].Source %>: <%= movieMin.Ratings[1].Value %></h6>
+	<% }; %>
 
-
-	<p><a href="http://www.imdb.com/title/<%= movie.movieId[0].detailBody.imdbID %>/" class="btn btn-primary" role="button" target="_blank">IMDB</a>
-	<p><a href="#" class="btn btn-primary" role="button" target="_blank">REMOVE</a>
-	<p><a href="#" class="btn btn-primary" role="button" target="_blank">WATCH LATER</a>
-
-
+	<p><a href="http://www.imdb.com/title/<%= movieMin.imdbID %>/" class="btn btn-primary" role="button" target="_blank">IMDB</a>
+	<p><a href="/remove/<%=movie.movieDetails[0].imdbID%>" class="btn btn-primary" role="button">REMOVE</a>
+	<p><a href="#" class="btn btn-primary" role="button">WATCH LATER</a>
+    <%console.log(movie.movieDetails[0].imdbID);%>
   </div>
 
 </div>

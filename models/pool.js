@@ -4,11 +4,12 @@ module.exports = function Pool(oldPool) {
 	this.add = function(parsedBody, id) {
 		var storedItem = this.items[id];
 		if(!storedItem) {
-			storedItem = this.items[id] = {movieId: parsedBody};
-			
+			storedItem = this.items[id] = {movieDetails: parsedBody};
 		}
-		//add more accessible items????
-		console.log(storedItem);
+	};
+
+	this.removeItem = function(id) {
+		delete this.items[id];
 	};
 
 	this.generateArray = function() {

@@ -14,9 +14,9 @@ router.get('/profile', isLoggedIn, function(req, res, next) {
 		if(err){
 			return res.write('Login Error! Please refresh and try again.');
 		}
-		var cart;
+		var pool;
 		orders.forEach(function(order) {
-			pool = new Cart(order.pool);
+			pool = new Pool(order.pool);
 			order.items = pool.generateArray();
 		});
 		res.render('user/profile', { orders: orders });
