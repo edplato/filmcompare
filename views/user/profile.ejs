@@ -1,8 +1,37 @@
 <%- include('../partials/header.ejs'); %>
 
+<% function convertObjectToList(obj) { %>
+  <%  var array = []; %>
+  <%  for (var key in obj){ %>
+  <%   array.push([key, obj[key]]); %>
+  <%  } %>
+  <% return array; %>
+  <% } %>
+
 <div class="row">
 <div class="col-md-8 col-md-offset-2">
 	<h1>User Profile</h1>
+	<hr>
+	<h2>My Saved Movies</h2>
+	<% compared.forEach(function(movie) { %>
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<ul class="list-group">
+			<% var deepObj = movie.pool.items %>
+		  		<li class="list-group-item">
+		  	
+		  		  <% var newArr = convertObjectToList(deepObj); %>
+		  		  <% console.log(newArr[0]); %>
+		  		  
+		  		  <span class="label label-success"></span>
+		  		</li>
+		  	
+			</ul>
+		</div>
+	
+		</div>	
+	</div>
+	<% }); %>
 	
 </div>
 </div>

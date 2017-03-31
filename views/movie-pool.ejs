@@ -1,12 +1,47 @@
 <%- include('partials/header.ejs'); %>
 
+<p><a href="/" class="btn btn-primary" role="button">Go Back</a></p>
 <div class="container">
-<% if(movies) { %>
+<% if(movies.length > 0) { %>
 <div class="row">
 <% movies.forEach(function(movie) { %>
+<% var movieMin = movie.movieDetails[0].detailBody %>
+<%	if(!movieMin.Metascore || movieMin.Metascore == 'N/A'){ %> 
+<%		var ratingMeta = 0; %>
+<%		} else { %>
+<%		var ratingMeta = Number(movieMin.Metascore) *.3; %>
+<%		}; %>
+
+<%	if(!movieMin.imdbRating || movieMin.imdbRating == 'N/A'){ %>
+<%		var ratingImdb = 0; %>
+<%		} else { %>
+<%		var ratingImdb = Number(movieMin.imdbRating) * 3; %>
+<%		}; %>
+
+<%	if(!movieMin.imdbVotes || movieMin.imdbVotes == 'N/A'){ %>
+<%		var ratingVotes = 0; %>
+<%		} else { %>
+<%		var ratingVotes = movieMin.imdbVotes; %>
+<%		ratingVotes = ratingVotes.replace( /,/g, "" ); %>
+<%		var votesLength = ratingVotes.length; %>
+<%		ratingVotes = Number(ratingVotes); %>
+<%		ratingVotes = Math.floor(ratingVotes / 100000);  %>
+<%		}; %>
+
+<%	if(!movieMin.Ratings[0] && !movieMin.Ratings[1]){ %>
+<%		var ratingRotten = 0; %>
+<%		} else { %>
+<%		var ratingRotten = movieMin.Ratings[1].Value; %>
+<%		ratingRotten = ratingRotten.slice(0, -1); %>
+<%		ratingRotten = Number(ratingRotten) *.3 ; %>
+<%		}; %>
+
+<% var calculatedRating = ((ratingMeta + ratingImdb + ratingVotes + ratingRotten) / 100).toFixed(2); %> 
+
 	<div class="container-fluid col-md-6">
+
 		<div class="hidden-lg hidden-md hidden-sm visible-xs">
-		<% var movieMin = movie.movieDetails[0].detailBody %>
+		
 	<h3><strong><%= movieMin.Title %></strong> (<%= movieMin.Year %>)</h3>
 </div>
 	<% if(!movieMin.Poster || movieMin.Poster == 'N/A'){ %>
@@ -39,18 +74,20 @@
 	<h6><strong>Stars:</strong> <%= movieMin.Actors %> </h6>
 	</div>
 	
-	<h6>IMDB: <%= movieMin.imdbRating %> / <%= movieMin.imdbVotes %> votes</h6>
-	
 	<% if(movieMin.Ratings[0]) { %>
-	<h6><%= movieMin.Ratings[0].Source %>: <%= movieMin.Ratings[0].Value %></h6>
-	
+	<h6>IMDB: <%= movieMin.Ratings[0].Value %></h6>
 	<h6><%= movieMin.Ratings[1].Source %>: <%= movieMin.Ratings[1].Value %></h6>
 	<% }; %>
 
+	<div style="opacity:<%=calculatedRating%>;" class="tempGauge">
+	<div ></div>
+	</div>
+
+
 	<p><a href="http://www.imdb.com/title/<%= movieMin.imdbID %>/" class="btn btn-primary" role="button" target="_blank">IMDB</a>
 	<p><a href="/remove/<%=movie.movieDetails[0].imdbID%>" class="btn btn-primary" role="button">REMOVE</a>
-	<p><a href="#" class="btn btn-primary" role="button">WATCH LATER</a>
-    <%console.log(movie.movieDetails[0].imdbID);%>
+	<p><a href="/compare-movies" class="btn btn-primary" role="button">ADD TO WATCH LIST</a>
+	<!-- <p><a href="#" class="btn btn-primary" role="button">WATCH LATER</a> -->
   </div>
 
 </div>
@@ -58,6 +95,16 @@
 
 <% }); %>
 </div>
-<%	}; %>
+
+
+<%	} else { %>
+<div class="container">
+	<div class="row col-md-8 col-md-offset-2">
+	<h1>There don't seem to be any movies yet...go <a href="/">search</a> for some!</h1>
+	</div>
 </div>
+<%	}; %>
+
+</div>
+
 <%- include('partials/footer.ejs'); %>

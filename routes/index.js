@@ -4,6 +4,7 @@ var request = require('request');
 
 var Pool = require('../models/pool');
 var Movie = require('../models/movies');
+var Compared = require('../models/compared');
 
 router.get('/', function(req, res, next) {
     var data;
@@ -44,7 +45,6 @@ router.get('/add-to-moviepool/:id', function(req, res, next) {
     var pool = new Pool(req.session.pool ? req.session.pool : {});
     var movies = [
         new Movie({ 
-            poster: parsedbody.Poster,
             imdbID: movieId,
             detailBody: parsedbody
         })
@@ -65,6 +65,14 @@ router.get('/remove/:id', function(req, res, next) {
     res.redirect('/movie-pool');
 });
 
+router.get('/navremove/:id', function(req, res, next) {
+    var movieId = req.params.id;
+    var pool = new Pool(req.session.pool ? req.session.pool : {});
+    pool.removeItem(movieId);
+    req.session.pool = pool;
+    res.redirect('/');
+});
+
 router.get('/movie-pool', function(req, res, next) {
     if(!req.session.pool) {
         return res.render('movie-pool', {movies: null});
@@ -72,6 +80,29 @@ router.get('/movie-pool', function(req, res, next) {
     var pool = new Pool(req.session.pool);
     res.render('movie-pool', {movies: pool.generateArray()});
 });
+
+router.get('/compare-movies', isLoggedIn, function(req, res, next) {
+    if(!req.session.pool) {
+        return res.redirect('/movie-pool');
+    }
+    var pool = new Pool(req.session.pool);
+    var errMsg = req.flash('error')[0];
+
+    // res.render('compare-movies', {total: pool.items, errMsg: errMsg, noMessages: !errMsg });
+    var compared = new Compared({
+        user: req.user,
+        pool: pool
+    });
+    compared.save(function(err, result) {
+        if(err){
+            req.flash('error', 'Error storing compared movies onto database.');
+        }
+        req.flash('success', 'Successfully compared product!');
+        req.session.pool = null;
+        res.redirect('/');
+    });
+});
+
 
 module.exports = router;
 

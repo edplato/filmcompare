@@ -3,23 +3,23 @@ var router = express.Router();
 var csrf = require('csurf');
 var passport = require('passport');
 
-// var Movie = require('../models/movies');
+var Compared = require('../models/compared');
 var Pool = require('../models/pool');
 
 var csrfProtection = csrf();
 router.use(csrfProtection);
 
 router.get('/profile', isLoggedIn, function(req, res, next) {
-	Order.find({user: req.user}, function(err, orders) {
+	Compared.find({user: req.user}, function(err, compared) {
 		if(err){
 			return res.write('Login Error! Please refresh and try again.');
 		}
 		var pool;
-		orders.forEach(function(order) {
-			pool = new Pool(order.pool);
-			order.items = pool.generateArray();
+		compared.forEach(function(comparison) {
+			pool = new Pool(comparison.pool);
+			comparison.items = pool.generateArray();
 		});
-		res.render('user/profile', { orders: orders });
+		res.render('user/profile', { compared: compared });
 	});
 });
 

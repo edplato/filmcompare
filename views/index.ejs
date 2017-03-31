@@ -24,13 +24,14 @@
         <% } %>
     <% data["Search"].forEach(function(movie) { %>
     <% if(movie["Type"] === "movie"){ %>
-        <div class="col-sm-6 col-md-3">
+        <div class="col-sm-6 col-md-2">
         <div class="thumbnail">
-            <% if(movie["Poster"] === "N/A"){ %>
-            <img class="poster" src="http://s3.amazonaws.com/static.betaeasy.com/screenshot/456/456-25984-14192637741419263774.42.jpeg">
-            <% } else { %>
-            <img class="poster" src="<%=movie["Poster"] %>">
-            <% }; %>
+  <% if(movie["Poster"] == 'N/A'){ %>
+    <% var poster = "http://s3.amazonaws.com/static.betaeasy.com/screenshot/456/456-25984-14192637741419263774.42.jpeg" %>
+  <%  } else {  %>
+    <% var poster = movie["Poster"] %>
+  <% }; %>
+    <img class="poster" src="<%= poster %>" alt="Movie Poster">
             <div class="caption">
                 <div class="resultsMovieInfo">
                     <h5><%= movie["Title"] %></h5>
@@ -41,8 +42,8 @@
             <% var title = movie["Title"] %>
             <% var poster = movie["Poster"] %>
             <% var year = movie["Year"] %>
-            </div>
             
+            </div>
         <a href="/add-to-moviepool/<%=movieId%>" class="btn btn-primary" role="button">Add Movie</a>
         </div>
         </div>

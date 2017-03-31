@@ -45,11 +45,47 @@
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
       </form> -->
+
+<% if(session.pool.items) { %>
+  <% function convertObjectToList(obj) { %>
+  <%  var array = []; %>
+  <%  for (var key in obj){ %>
+  <%   array.push([key, obj[key]]); %>
+  <%  } %>
+  <% return array; %>
+  <% } %>
+
+  <% var newArr = convertObjectToList(session.pool.items); %>
+
+  <div class="navbarPosterContainer">
+  <% for(var i = 0; i < newArr.length; i++){ %>
+    <% var navbarMovieDetail = newArr[i][1].movieDetails[0].detailBody %>
+  <div class="dropdown">
+
+  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    
+  <% if(navbarMovieDetail.Poster == 'N/A'){ %>
+    <img src="http://s3.amazonaws.com/static.betaeasy.com/screenshot/456/456-25984-14192637741419263774.42.jpeg" alt="Movie Poster">
+  <%  } else { %>
+    <img src="<%=navbarMovieDetail.Poster%>" alt="Movie Poster">
+  <% } %>
+
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li><%=navbarMovieDetail.Title%></li>
+        <li role="separator" class="divider"></li>
+        <li><a href="/movie-pool">View in Pool</a></li>
+        <li><a href="/navremove/<%=navbarMovieDetail.imdbID%>">Remove</a></li>
+        <% if(login) { %>
+        <li><a href="/compare-movies">Watch Later</a></li>
+        <% }; %>
+      </ul>
+    </div>
+  <% }; %>
+  </div>
+<% }; %>
+
       <ul class="nav navbar-nav navbar-right">
-  <!-- 
-           session.pool.items.forEach(function(navPoster) { 
-              console.log("hey"); 
-           });  -->
         <li><a href="/movie-pool"><span class="glyphicon glyphicon-film" aria-hidden="true"></span> Movies To Compare </a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> User Management <span class="caret"></span></a>
