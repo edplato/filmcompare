@@ -1,5 +1,6 @@
 <%- include('../partials/header.ejs'); %>
 
+<div class="container userAuthForm">
 <div class="row">
 	<div class="col-md-4 col-md-offset-4">
 		<h1>Sign Up</h1>
@@ -19,9 +20,9 @@
 			</div>
 			<input type="hidden" name="_csrf" value="<%= csrfToken %>">
 			<button type="submit" class="btn btn-primary">Sign Up</button>
-			<p><%= csrfToken %></p>
 		</form>
 	</div>
 </div>	
+</div>
 
 <%- include('../partials/footer.ejs'); %>

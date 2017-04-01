@@ -1,14 +1,14 @@
 <%- include('partials/header.ejs'); %>
 
 <div class="container">
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
+<div class="row searchBar">
+  <div>
   <h1>Welcome to <%= title %></h1>
 
   <form action="/results" method="get">
     <div class="form-group">
         <label for="search">Search Movie Title...</label>
-        <input type="text" name="search" class="form-control">
+        <input type="text" name="search" class="form-control" maxlength="60">
     </div>
     <button type="submit" class="btn btn-primary">View Search Results</button>
   </form>
@@ -17,34 +17,39 @@
 </div>
 
 <% if(data) { %>
-
-<div class="row">
+<div class="row searchResults">
     <% if(!data.Response || data.Response === "False"){ %>
         <% action="/"; %>
         <% } %>
-    <% data["Search"].forEach(function(movie) { %>
-    <% if(movie["Type"] === "movie"){ %>
-        <div class="col-sm-6 col-md-2">
+    <% data.Search.forEach(function(movie) { %>
+    <% if(movie.Type === "movie"){ %>
+        <div class="col-sm-6 col-md-3">
         <div class="thumbnail">
-  <% if(movie["Poster"] == 'N/A'){ %>
-    <% var poster = "http://s3.amazonaws.com/static.betaeasy.com/screenshot/456/456-25984-14192637741419263774.42.jpeg" %>
-  <%  } else {  %>
-    <% var poster = movie["Poster"] %>
-  <% }; %>
-    <img class="poster" src="<%= poster %>" alt="Movie Poster">
+        <% if(movie.Poster == 'N/A'){ %>
+        <% var poster = "http://s3.amazonaws.com/static.betaeasy.com/screenshot/456/456-25984-14192637741419263774.42.jpeg" %>
+        <%  } else {  %>
+        <% var poster = movie.Poster %>
+        <% }; %>
+        <% var movieId = movie.imdbID %>
+        <img class="posterSearch" src="<%= poster %>" alt="Movie Poster">
             <div class="caption">
-                <div class="resultsMovieInfo">
-                    <h5><%= movie["Title"] %></h5>
-                     <p><%= movie["Year"] %></p>
-                     <p><%= movie["imdbID"] %></p>
-                </div>
-            <% var movieId = movie["imdbID"] %>
-            <% var title = movie["Title"] %>
-            <% var poster = movie["Poster"] %>
-            <% var year = movie["Year"] %>
-            
+              <div class="resultsMovieInfo">
+
+          <% if(movie.Title.length > 106) { %>
+          <%  var title = movie.Title.substr(0, 103) + '...'; %>
+          <% } else { %>
+          <%  var title = movie.Title; %>
+          <% }; %>
+
+          <h4><%= title %> <span class="searchResultsMovieYear">(<strong><%= movie.Year %></strong>)</span></h4>
+              </div>
             </div>
-        <a href="/add-to-moviepool/<%=movieId%>" class="btn btn-primary" role="button">Add Movie</a>
+
+        <div class="btn-group-vertical searchResultsButtons" role="group" aria-label="Buttons">      
+          <a href="/add-to-moviepool/<%=movieId%>" class="btn btn-primary" role="button">Add To Movie Pool</a>
+          <a href="http://www.imdb.com/title/<%=movieId%>" class="btn btn-success" role="button" target="_blank">View IMDB</a>
+        </div>
+
         </div>
         </div>
     <% }; %>

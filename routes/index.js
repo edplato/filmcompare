@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var request = require('request'); 
+// var main = require('../public/javascripts/main');
 
 var Pool = require('../models/pool');
 var Movie = require('../models/movies');
@@ -62,6 +63,7 @@ router.get('/remove/:id', function(req, res, next) {
     var pool = new Pool(req.session.pool ? req.session.pool : {});
     pool.removeItem(movieId);
     req.session.pool = pool;
+    console.log(req.session.pool);
     res.redirect('/movie-pool');
 });
 
@@ -69,7 +71,6 @@ router.get('/navremove/:id', function(req, res, next) {
     var movieId = req.params.id;
     var pool = new Pool(req.session.pool ? req.session.pool : {});
     pool.removeItem(movieId);
-    req.session.pool = pool;
     res.redirect('/');
 });
 
@@ -81,14 +82,14 @@ router.get('/movie-pool', function(req, res, next) {
     res.render('movie-pool', {movies: pool.generateArray()});
 });
 
-router.get('/compare-movies', isLoggedIn, function(req, res, next) {
+router.get('/watch-later', isLoggedIn, function(req, res, next) {
     if(!req.session.pool) {
         return res.redirect('/movie-pool');
     }
     var pool = new Pool(req.session.pool);
     var errMsg = req.flash('error')[0];
 
-    // res.render('compare-movies', {total: pool.items, errMsg: errMsg, noMessages: !errMsg });
+    // res.render('watch-later', {total: pool.items, errMsg: errMsg, noMessages: !errMsg });
     var compared = new Compared({
         user: req.user,
         pool: pool
