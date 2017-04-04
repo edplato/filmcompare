@@ -3,7 +3,9 @@
 <div class="container userAuthForm">
 <div class="row">
 	<div class="col-md-4 col-md-offset-4">
-		<h1>Sign Up</h1>
+	<div class="page-header">
+  		<h3>Create Account</h3>
+	</div>
 		<% messages.forEach(function(message) { %>
 			<div class="alert alert-danger">
 				<p><%= messages %></p>
@@ -11,15 +13,15 @@
 		<% }); %>
 		<form action="/user/signup" method="post">
 			<div class="form-group">
-				<label for="email">E-Mail</label>
-				<input type="text" id="email" name="email" class="form-control">
+				<!-- <label for="email">E-Mail</label> -->
+				<input type="text" id="email" name="email" class="form-control" placeholder="E-Mail">
 			</div>
 			<div class="form-group">
-				<label for="password">Password</label>
-				<input type="password" id="password" name="password" class="form-control">
+				<!-- <label for="password">Password</label> -->
+				<input type="password" id="password" name="password" class="form-control" placeholder="Password">
 			</div>
 			<input type="hidden" name="_csrf" value="<%= csrfToken %>">
-			<button type="submit" class="btn btn-primary">Sign Up</button>
+			<button type="submit" class="btn btn-success">Sign Up</button>
 		</form>
 	</div>
 </div>	

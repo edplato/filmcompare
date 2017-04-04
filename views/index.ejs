@@ -6,11 +6,14 @@
   <h1>Welcome to <%= title %></h1>
 
   <form action="/results" method="get">
-    <div class="form-group">
-        <label for="search">Search Movie Title...</label>
-        <input type="text" name="search" class="form-control" maxlength="60">
-    </div>
-    <button type="submit" class="btn btn-primary">View Search Results</button>
+  <div class="form-group">
+  <div class="input-group">
+      <input type="text" name="search" class="form-control" maxlength="60" placeholder="Search Movie Title...">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+      </span>
+    </div><!-- /input-group -->
+  </div>
   </form>
 
   </div>
@@ -41,13 +44,13 @@
           <%  var title = movie.Title; %>
           <% }; %>
 
-          <h4><%= title %> <span class="searchResultsMovieYear">(<strong><%= movie.Year %></strong>)</span></h4>
+          <h5><%= title %> <span class="searchResultsMovieYear">(<%= movie.Year %>)</span></h5>
               </div>
             </div>
 
         <div class="btn-group-vertical searchResultsButtons" role="group" aria-label="Buttons">      
-          <a href="/add-to-moviepool/<%=movieId%>" class="btn btn-primary" role="button">Add To Movie Pool</a>
-          <a href="http://www.imdb.com/title/<%=movieId%>" class="btn btn-success" role="button" target="_blank">View IMDB</a>
+          <a href="/add-to-moviepool/<%=movieId%>" class="btn btn-primary" role="button">+ Add To Movie Pool</a>
+          <a href="http://www.imdb.com/title/<%=movieId%>" class="btn btn-warning" role="button" target="_blank">View IMDB</a>
         </div>
 
         </div>
