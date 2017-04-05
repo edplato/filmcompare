@@ -17,10 +17,20 @@ router.get('/profile', isLoggedIn, function(req, res, next) {
 		var pool;
 		compared.forEach(function(comparison) {
 			pool = new Pool(comparison.pool);
-			comparison.items = pool.generateArray();
+			// comparison = pool.generateArray();
 		});
 		res.render('user/profile', { compared: compared });
 	});
+});
+
+router.get('/delete-saved/:id', isLoggedIn, function(req, res, next) {
+	var documentId = req.params.id;
+	Compared.findByIdAndRemove(documentId, function(err, compared) {
+		if(err){
+			return res.write('Login Error! Please refresh and try again.');
+		}
+	});
+	res.redirect('/user/profile');
 });
 
 
@@ -47,7 +57,7 @@ router.post('/signup', passport.authenticate('local.signup', {
 		req.session.oldUrl = null;
 		res.redirect(oldUrl);
 	} else {
-		res.redirect('user/profile');
+		res.redirect('/user/profile');
 	}
 });
 

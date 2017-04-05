@@ -24,16 +24,23 @@
     <% if(!data.Response || data.Response === "False"){ %>
         <% action="/"; %>
         <% } %>
-    <% data.Search.forEach(function(movie) { %>
+    <% data.Search.forEach(function(movie) { %>  <!-- data forEach -->
     <% if(movie.Type === "movie"){ %>
-        <div class="col-sm-6 col-md-3">
-        <div class="thumbnail">
         <% if(movie.Poster == 'N/A'){ %>
         <% var poster = "http://s3.amazonaws.com/static.betaeasy.com/screenshot/456/456-25984-14192637741419263774.42.jpeg" %>
         <%  } else {  %>
         <% var poster = movie.Poster %>
         <% }; %>
         <% var movieId = movie.imdbID %>
+
+        <div class="col-sm-6 col-md-3">
+
+        <% if(session.pool.items !== undefined && session.pool.items[movieId] !== undefined){ %>
+        <div class="thumbnail inPoolBackground">
+        <% } else { %>
+        <div class="thumbnail">
+        <% }; %>  
+
         <img class="posterSearch" src="<%= poster %>" alt="Movie Poster">
             <div class="caption">
               <div class="resultsMovieInfo">
@@ -44,19 +51,26 @@
           <%  var title = movie.Title; %>
           <% }; %>
 
-          <h5><%= title %> <span class="searchResultsMovieYear">(<%= movie.Year %>)</span></h5>
+          <h5><%= title %> <span class="yearStyle">(<%= movie.Year %>)</span></h5>
               </div>
             </div>
 
-        <div class="btn-group-vertical searchResultsButtons" role="group" aria-label="Buttons">      
-          <a href="/add-to-moviepool/<%=movieId%>" class="btn btn-primary" role="button">+ Add To Movie Pool</a>
-          <a href="http://www.imdb.com/title/<%=movieId%>" class="btn btn-warning" role="button" target="_blank">View IMDB</a>
+
+        <div class="btn-group-vertical searchResultsButtons" role="group" aria-label="Buttons">
+          <% if(session.pool.items !== undefined && session.pool.items[movieId]){ %>
+          <a href="/remove/<%=movieId%>" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Remove from Pool</a>
+          <% } else { %>
+          <a href="/add-to-moviepool/<%=movieId%>" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add To Movie Pool</a>
+          <% }; %>
+          <a href="http://www.imdb.com/title/<%=movieId%>" class="btn btn-default" role="button" target="_blank">View IMDB</a>
         </div>
 
         </div>
         </div>
+
+
     <% }; %>
-  <% }); %>  
+  <% }); %>  <!-- data forEach -->
 </div>
 <% } else { %>
 <p></p>

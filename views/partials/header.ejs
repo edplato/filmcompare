@@ -4,6 +4,7 @@
     <title>Flick Pick</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Raleway" rel="stylesheet" />
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
 <body>
@@ -20,9 +21,9 @@
       <a class="navbar-brand" href="/"><span><img alt="Logo" id="logo" src="/images/favicon-32x32.png"></span>Flick Pick</a>
     </div>
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      
+
 <ul class="nav navbar-nav navbar-right">
-<% if(session.pool.items) { %>
+<% if(session.pool !== undefined && session.pool.items) { %>
   <% function convertObjectToList(obj) { %>
   <%  var array = []; %>
   <%  for (var key in obj){ %>

@@ -3,6 +3,28 @@ html {
   height: 100%;
 }
 
+body {
+  font-family: 'Raleway', sans-serif;
+  background: url("/images/filmBackround.png");
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: 10% 100%; 
+}
+
+.navbar-default {
+  min-height: 75px;
+}
+
+#logo {
+  padding-bottom: 20px;
+}
+
+.navbar-brand {
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  padding-top: 12px;
+}
+
 .mainContainer {
   overflow-y: auto; 
   height: 100%;
@@ -21,7 +43,9 @@ html {
 }
 
 .input-group {
-  padding: 5px 8% 5px 8%;
+  margin: 0 auto;
+  padding: 5px;
+  max-width: 400px;
 }
 
 .input-group button {
@@ -38,8 +62,24 @@ html {
   text-align: center;
 }
 
+.emptyPoolMessage {
+  text-align: center;
+}
+
+.inPoolMessage {
+  opacity: 0.5;
+  letter-spacing: 2px;
+}
+
+.inPoolBackground {
+  background: lightsteelblue;
+}
+
 .moviePoolContainers {
-  min-height: 434px;
+  padding: 0;
+  border: 1px solid black;
+  /*min-height: 434px;*/
+  /*margin: 5px;*/
   /*height: 800px;*/
   background: white; /* For browsers that do not support gradients */
   background: -webkit-linear-gradient(left top, white, lightsteelblue); /* For Safari 5.1 to 6.0 */
@@ -49,7 +89,7 @@ html {
 }
 
 .moviePoolContainers .thumbnail {
-  margin-bottom: 10px;
+  margin-bottom: 0;
 }
 
 .poolHiddenRT {
@@ -64,6 +104,25 @@ html {
 .searchResults .thumbnail {
   height: 400px;
   position: relative;
+}
+
+.navbar-default .navbar-toggle{ 
+  margin: 10px;
+  width: 50px;
+  height: 50px;
+ }
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: black;
+}
+
+.navbar-toggle .icon-bar {
+  width: 100%;
+}
+
+.yearStyle {
+  opacity: 0.7;
+  font-size: .8em;
 }
 
 .searchResultsMovieYear {
@@ -99,6 +158,7 @@ html {
 }
 
 .poster {
+  min-height: 240px;
   max-height: 240px;
 }
 
@@ -135,9 +195,12 @@ html {
 }
 
 .navbarPosterContainer img {
-  padding-top: 3px;
+  /*padding-top: 3px;*/
 	height: 65px;
   width: 42px;
+-webkit-box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.3);
+-moz-box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.3);
+box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.3);
   /*position: absolute;*/
   /*z-index: -1;*/
 }
