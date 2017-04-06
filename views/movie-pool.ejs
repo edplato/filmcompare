@@ -3,8 +3,8 @@
 <div class="container mainContainer">
 <% if(movies.length > 0) { %>
 <div class="row">
-<div class="page-header">
-  		<h3>Movie Pool</h3>
+	<div class="page-header">
+		<h3>Movie Pool</h3>
 	</div>
 <% movies.forEach(function(movie) { %>
 <% var movieMin = movie.movieDetails[0].detailBody %>
@@ -58,13 +58,10 @@
 		<% var poster = movieMin.Poster %>
 	<% }; %>
 
-
-
-
 <div class="container-fluid col-md-6 moviePoolContainers">
 
 <div class="hidden-lg hidden-md hidden-sm visible-xs">	
-<h5><strong><%= movieMin.Title %></strong> <span class="yearStyle">(<%= movieMin.Year %>)</span></h5>
+  <h5><strong><%= movieMin.Title %></strong> <span class="yearStyle">(<%= movieMin.Year %>)</span></h5>
 </div>
 
   	<div class="thumbnail col-sm-6 col-xs-12 visible-lg visible-md visible-sm hidden-xs"> <!-- thumbnail hidden xs -->
@@ -77,85 +74,80 @@
   		</div>
       </div></span></h6>
 
-	<% if(movieMin.Ratings[0]) { %>
-	<h6><strong>IMDB:</strong> <%= movieMin.Ratings[0].Value %><a href="http://www.imdb.com/title/<%= movieMin.imdbID %>/" class="btn btn-default" role="button" target="_blank" style="float: right;">View IMDB</a></h6>
-	<% }; %>
-	<% if(movieMin.Ratings[1]) { %>
-	<h6><strong><%= movieMin.Ratings[1].Source %>:</strong> <%= movieMin.Ratings[1].Value %></h6>
-	<% } else { %>
-	<h6 class="poolHiddenRT"><strong>Rotten Tomatoes:</strong> 100%</h6>
-	<% }; %>
+    	<% if(movieMin.Ratings[0]) { %>
+    	<h6><strong>IMDB:</strong> <%= movieMin.Ratings[0].Value %><a href="http://www.imdb.com/title/<%= movieMin.imdbID %>/" class="btn btn-default" role="button" target="_blank" style="float: right;">View IMDB</a></h6>
+    	<% }; %>
+    	<% if(movieMin.Ratings[1]) { %>
+    	<h6><strong><%= movieMin.Ratings[1].Source %>:</strong> <%= movieMin.Ratings[1].Value %></h6>
+    	<% } else { %>
+    	<h6 class="poolHiddenRT"><strong>Rotten Tomatoes:</strong> 100%</h6>
+    	<% }; %>
 
 	    <div class="btn-group-vertical searchResultsPoolButtons" role="group" aria-label="Buttons">      
-          <a href="/remove/<%=movie.movieDetails[0].imdbID%>" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Remove</a>
-          <a href="/watch-later/<%=movie.movieDetails[0].imdbID%>" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Add to Watch Later</a>
-        </div>
+        <a href="/remove/<%=movie.movieDetails[0].imdbID%>" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Remove</a>
+        <a href="/watch-later/<%=movie.movieDetails[0].imdbID%>" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Add to Watch Later</a>
+      </div>
 
   	</div> <!-- thumbnail hidden xs -->
-
 
    <div class="thumbnail col-sm-6 hidden-lg hidden-md hidden-sm visible-xs"> <!-- thumbnail visible xs -->
    <img class="posterSmall" src="<%= poster %>" alt="Movie Poster">
 
 
-<h6><strong>Flick Pick Meter:</strong>
+      <h6><strong>Flick Pick Meter:</strong>
 		  <span><div class="progress">
   		<div class="<%= progressBarClass %>" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: <%= calculatedRating  %>%;">
     	<%= calculatedRating  %>%
   		</div>
       </div></span></h6>
 
-	<% if(movieMin.Ratings[0]) { %>
-	<h6><strong>IMDB:</strong> <%= movieMin.Ratings[0].Value %><a href="http://www.imdb.com/title/<%= movieMin.imdbID %>/" class="btn btn-default" role="button" target="_blank" style="float: right;">View IMDB</a></h6>
-	<% }; %>
-	<% if(movieMin.Ratings[1]) { %>
-	<h6><strong><%= movieMin.Ratings[1].Source %>:</strong> <%= movieMin.Ratings[1].Value %></h6>
-	<% } else { %>
-	<h6 class="poolHiddenRT"><strong>Rotten Tomatoes:</strong> 100%</h6>
-	<% }; %>
+    	<% if(movieMin.Ratings[0]) { %>
+    	<h6><strong>IMDB:</strong> <%= movieMin.Ratings[0].Value %><a href="http://www.imdb.com/title/<%= movieMin.imdbID %>/" class="btn btn-default" role="button" target="_blank" style="float: right;">View IMDB</a></h6>
+    	<% }; %>
+    	<% if(movieMin.Ratings[1]) { %>
+    	<h6><strong><%= movieMin.Ratings[1].Source %>:</strong> <%= movieMin.Ratings[1].Value %></h6>
+    	<% } else { %>
+    	<h6 class="poolHiddenRT"><strong>Rotten Tomatoes:</strong> 100%</h6>
+    	<% }; %>
 
-        <div class="btn-group-vertical searchResultsButtonsMin" role="group" aria-label="Buttons">      
-          <a href="/remove/<%=movie.movieDetails[0].imdbID%>" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Remove</a>
-          <a href="/watch-later/<%=movie.movieDetails[0].imdbID%>" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Add to Watch Later</a>
-        </div>
+      <div class="btn-group-vertical searchResultsButtonsMin" role="group" aria-label="Buttons">      
+        <a href="/remove/<%=movie.movieDetails[0].imdbID%>" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Remove</a>
+        <a href="/watch-later/<%=movie.movieDetails[0].imdbID%>" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Add to Watch Later</a>
+      </div>
 
   </div> <!-- thumbnail visible xs -->
 
   <div class="col-sm-6 col-xs-12">
+  <div class="searchMovieInfo">
+   <div class="visible-lg visible-md visible-sm hidden-xs">
+   <h5><strong><%= movieMin.Title %></strong> <span class="yearStyle">(<%= movieMin.Year %>)</span></h5>
+   </div>
 
-  	<div class="searchMovieInfo">
-
-<div class="visible-lg visible-md visible-sm hidden-xs">
-<h5><strong><%= movieMin.Title %></strong> <span class="yearStyle">(<%= movieMin.Year %>)</span></h5>
-</div>
-
-	<h6><%= movieMin.Genre %></h6>
-	<h6>Runtime: <%= movieMin.Runtime %>  <span class="label label-default"><%= movieMin.Rated %></span>    </h6>
+   <h6><%= movieMin.Genre %></h6>
+	 <h6>Runtime: <%= movieMin.Runtime %>  <span class="label label-default"><%= movieMin.Rated %></span>    </h6>
 	</div>
+
 	<hr>
+
 	<div>
 		<p><%= movieMin.Plot %> </p>
 		<h6><strong>Directed By:</strong> <%= movieMin.Director %> </h6>
 		<h6><strong>Written By:</strong> <%= movieMin.Writer %> </h6>
 		<h6><strong>Stars:</strong> <%= movieMin.Actors %> </h6>
-		
 	</div>
   </div>
 
 </div> <!-- moviePoolContainers div -->
-
 <% }); %>
 </div> <!-- main div row -->
 
-
 <%	} else { %>
-<div class="page-header">
-  		<h3>Movie Pool</h3>
+  <div class="page-header">
+		<h3>Movie Pool</h3>
 	</div>
 	<div class="row col-md-8 col-md-offset-2 emptyPoolMessage">
-	<h1>There doesn't seem to be any movies yet...<br>go <a href="/">search</a> for some!</h1>
+	  <h1>There doesn't seem to be any movies yet...<br>go <a href="/">search</a> for some!</h1>
 	</div>
-
 <%	}; %>
 
 </div> <!-- main div container -->

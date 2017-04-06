@@ -3,7 +3,7 @@
 <div class="container mainContainer">
 <div class="row searchBar">
   <div>
-  <h1>Welcome to <%= title %></h1>
+  <h1 class="mainTitle">Welcome to <%= title %></h1>
 
   <form action="/results" method="get">
   <div class="form-group">
@@ -12,7 +12,7 @@
       <span class="input-group-btn">
         <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
       </span>
-    </div><!-- /input-group -->
+    </div> <!-- input-group -->
   </div>
   </form>
 
@@ -21,10 +21,11 @@
 
 <% if(data) { %>
 <div class="row searchResults">
+<h3 class="mainMoviePoolLink"><a href="/movie-pool/"><em>Go to Movie Pool</em></a></h3>
     <% if(!data.Response || data.Response === "False"){ %>
         <% action="/"; %>
         <% } %>
-    <% data.Search.forEach(function(movie) { %>  <!-- data forEach -->
+    <% data.Search.forEach(function(movie) { %> 
     <% if(movie.Type === "movie"){ %>
         <% if(movie.Poster == 'N/A'){ %>
         <% var poster = "http://s3.amazonaws.com/static.betaeasy.com/screenshot/456/456-25984-14192637741419263774.42.jpeg" %>
@@ -33,7 +34,7 @@
         <% }; %>
         <% var movieId = movie.imdbID %>
 
-        <div class="col-sm-6 col-md-3">
+  <div class="col-sm-6 col-md-3">
 
         <% if(session.pool.items !== undefined && session.pool.items[movieId] !== undefined){ %>
         <div class="thumbnail inPoolBackground">
@@ -55,7 +56,6 @@
               </div>
             </div>
 
-
         <div class="btn-group-vertical searchResultsButtons" role="group" aria-label="Buttons">
           <% if(session.pool.items !== undefined && session.pool.items[movieId]){ %>
           <a href="/remove/<%=movieId%>" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Remove from Pool</a>
@@ -64,17 +64,15 @@
           <% }; %>
           <a href="http://www.imdb.com/title/<%=movieId%>" class="btn btn-default" role="button" target="_blank">View IMDB</a>
         </div>
-
-        </div>
-        </div>
-
-
+      </div>
+      </div>
     <% }; %>
   <% }); %>  <!-- data forEach -->
-</div>
-<% } else { %>
-<h3 class="homePageBlankMessage">Use the search to find movies, add them to the Movie Pool, and get detailed information to help pick what movie to watch!</h3>
-<% }; %>
-</div>
+  </div> <!-- col-sm-6 col-md-3 -->
+  <% } else { %>
+  <h3 class="homePageBlankMessage">Use the search to find movies, add them to the <a href="/movie-pool/">Movie Pool</a>, and get detailed information to help pick what movie to watch!</h3>
+  <% }; %>
+</div> <!-- div row searchResults -->
+</div> <!-- main div container -->
 
 <%- include('partials/footer.ejs'); %>
