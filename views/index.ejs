@@ -1,6 +1,6 @@
 <%- include('partials/header.ejs'); %>
 
-<div class="container">
+<div class="container mainContainer">
 <div class="row searchBar">
   <div>
   <h1>Welcome to <%= title %></h1>
@@ -41,7 +41,7 @@
         <div class="thumbnail">
         <% }; %>  
 
-        <img class="posterSearch" src="<%= poster %>" alt="Movie Poster">
+        <img class="poster" src="<%= poster %>" alt="Movie Poster">
             <div class="caption">
               <div class="resultsMovieInfo">
 
@@ -51,7 +51,7 @@
           <%  var title = movie.Title; %>
           <% }; %>
 
-          <h5><%= title %> <span class="yearStyle">(<%= movie.Year %>)</span></h5>
+          <h5 class="searchResultsTitle"><%= title %> <span class="yearStyle">(<%= movie.Year %>)</span></h5>
               </div>
             </div>
 
@@ -73,7 +73,7 @@
   <% }); %>  <!-- data forEach -->
 </div>
 <% } else { %>
-<p></p>
+<h3 class="homePageBlankMessage">Use the search to find movies, add them to the Movie Pool, and get detailed information to help pick what movie to watch!</h3>
 <% }; %>
 </div>
 

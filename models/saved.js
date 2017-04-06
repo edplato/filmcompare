@@ -6,4 +6,4 @@ var schema = new Schema({
 	pool: {type: Object, required: true}
 });
 
-module.exports = mongoose.model('Compared', schema);
+module.exports = mongoose.model('Saved', schema);

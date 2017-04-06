@@ -39,7 +39,7 @@
     <% var navbarMovieDetail = newArr[i][1].movieDetails[0].detailBody %>
   <div class="dropdown">
 
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+  <button class="btn btn-default dropdown-toggle navBarMovieButton" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
     
   <% if(navbarMovieDetail.Poster == 'N/A'){ %>
     <img src="http://s3.amazonaws.com/static.betaeasy.com/screenshot/456/456-25984-14192637741419263774.42.jpeg" alt="Movie Poster">
@@ -54,7 +54,7 @@
         <li><a href="/movie-pool">View in Pool</a></li>
         <li><a href="/navremove/<%=navbarMovieDetail.imdbID%>">Remove</a></li>
         <% if(login) { %>
-        <li><a href="/watch-later">Watch Later</a></li>
+        <li><a href="/watch-later/<%=navbarMovieDetail.imdbID%>">Watch Later</a></li>
         <% }; %>
       </ul>
       

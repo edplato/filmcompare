@@ -3,29 +3,28 @@ var router = express.Router();
 var csrf = require('csurf');
 var passport = require('passport');
 
-var Compared = require('../models/compared');
+var Saved = require('../models/saved');
 var Pool = require('../models/pool');
 
 var csrfProtection = csrf();
 router.use(csrfProtection);
 
 router.get('/profile', isLoggedIn, function(req, res, next) {
-	Compared.find({user: req.user}, function(err, compared) {
+	Saved.find({user: req.user}, function(err, saved) {
 		if(err){
 			return res.write('Login Error! Please refresh and try again.');
 		}
 		var pool;
-		compared.forEach(function(comparison) {
-			pool = new Pool(comparison.pool);
-			// comparison = pool.generateArray();
+		saved.forEach(function(savedMovie) {
+			pool = new Pool(savedMovie.pool);
 		});
-		res.render('user/profile', { compared: compared });
+		res.render('user/profile', { saved: saved });
 	});
 });
 
 router.get('/delete-saved/:id', isLoggedIn, function(req, res, next) {
 	var documentId = req.params.id;
-	Compared.findByIdAndRemove(documentId, function(err, compared) {
+	Saved.findByIdAndRemove(documentId, function(err, saved) {
 		if(err){
 			return res.write('Login Error! Please refresh and try again.');
 		}

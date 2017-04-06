@@ -1,14 +1,13 @@
 <%- include('../partials/header.ejs'); %>
 
-<div class="container">
+<div class="container mainContainer">
 <div class="row">
 <div class="col-md-8 col-md-offset-2">
   <div class="page-header">
       <h3>Profile</h3>
   </div>
-	<h3>My Saved Movies</h3>
- <!-- console.log(compared); -->
-	<% compared.forEach(function(movie) { %>
+	<h3 class="profileSubHeader"><small>My Saved Movies</small></h3>
+	<% saved.forEach(function(movie) { %>
 	<% var addedIndividualMovie = movie.pool.movieDetails[0].detailBody; %>
 	<%	if(!addedIndividualMovie.Metascore || addedIndividualMovie.Metascore == 'N/A'){ %> 
 <%		var ratingMeta = 0; %>
@@ -46,11 +45,11 @@
    <% calculatedRating = 100 }; %>
 
 <% if(calculatedRating >= 0 && calculatedRating <= 33) { %>
-	<% var progressBarClass = "progress-bar progress-bar-danger"; %>
+	<% var progressBarClass = "progress-bar progressBarRed"; %>
 <% } else if(calculatedRating > 33 && calculatedRating <= 60) { %>
-	<% var progressBarClass = "progress-bar progress-bar-warning"; %>
+	<% var progressBarClass = "progress-bar progressBarYellow"; %>
 <% } else if(calculatedRating > 60) { %>
-	<% var progressBarClass = "progress-bar progress-bar-success"; %>
+	<% var progressBarClass = "progress-bar progressBarBlue"; %>
 <% }; %>
 
 	<div class="media">
@@ -61,7 +60,13 @@
   </div>
   <div class="media-body">
     <h5 class="media-heading"><strong><%= addedIndividualMovie.Title %></strong> <span class="yearStyle">(<%= addedIndividualMovie.Year %>)</span></h5>
+
+    <h6><%= addedIndividualMovie.Genre %></h6>
+  <h6>Runtime: <%= addedIndividualMovie.Runtime %>  <span class="label label-default"><%= addedIndividualMovie.Rated %></span>    </h6>
+
     <%= addedIndividualMovie.Plot %>
+
+
 
     	<h6><strong>Flick Pick Meter:</strong>
 		  <span><div class="progress profileProgress">
@@ -70,7 +75,7 @@
   		</div>
       </div></span></h6>
 
-      <div class="btn-group-horizontal" role="group" aria-label="Buttons">
+      <div class="btn-group-horizontal profileButtons" role="group" aria-label="Buttons">
   
           <a href="/add-to-moviepool/<%=addedIndividualMovie.imdbID%>" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add To Movie Pool</a>
 

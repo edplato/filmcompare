@@ -6,17 +6,58 @@ html {
 body {
   font-family: 'Raleway', sans-serif;
   background: url("/images/filmBackround.png");
+  background-color: #252839;
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: 10% 100%; 
 }
 
-.navbar-default {
-  min-height: 75px;
+h1 {
+  color: #f7f7f7;
 }
 
-#logo {
-  padding-bottom: 20px;
+h3 {
+  color: #f7f7f7;  
+}
+
+.page-header {
+  margin-top: 0;
+}
+
+.page-header h3 {
+  text-align: left;
+  padding-left: 16px;
+  margin-top: 0;
+}
+
+.mainContainer {
+  overflow-y: auto; 
+  height: 100%;
+}
+
+.homePageBlankMessage{
+  text-align: center;
+}
+
+
+/*NAVBAR*/
+.navbarPosterContainer img {
+  height: 65px;
+  width: 42px;
+  -webkit-box-shadow: 2px 2px 2px -1px rgba(0,0,0,0.8);
+  -moz-box-shadow: 2px 2px 2px -1px rgba(0,0,0,0.8);
+  box-shadow: 2px 2px 2px -1px rgba(0,0,0,0.8);
+}
+
+.navbarPosterContainer .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.navbar-default {
+  min-height: 75px;
+  border-radius: 0;
+  background-color: #f7f7f7;
 }
 
 .navbar-brand {
@@ -25,85 +66,9 @@ body {
   padding-top: 12px;
 }
 
-.mainContainer {
-  overflow-y: auto; 
-  height: 100%;
-}
-
-.searchBar {
-  align-content: center;
-  text-align: center;
-  margin: 0 auto;
-}
-
-.form-control {
-  /*text-align: center;*/
-  margin: 0 auto;
-  width: 80%;
-}
-
-.input-group {
-  margin: 0 auto;
-  padding: 5px;
-  max-width: 400px;
-}
-
-.input-group button {
-  height: 34px;
-}
-
-.dropdown-toggle {
-  border: none;
-  background: none;
-  padding-top: 0;
-}
-
-.searchResults {
-  text-align: center;
-}
-
-.emptyPoolMessage {
-  text-align: center;
-}
-
-.inPoolMessage {
-  opacity: 0.5;
-  letter-spacing: 2px;
-}
-
-.inPoolBackground {
-  background: lightsteelblue;
-}
-
-.moviePoolContainers {
-  padding: 0;
-  border: 1px solid black;
-  /*min-height: 434px;*/
-  /*margin: 5px;*/
-  /*height: 800px;*/
-  background: white; /* For browsers that do not support gradients */
-  background: -webkit-linear-gradient(left top, white, lightsteelblue); /* For Safari 5.1 to 6.0 */
-  background: -o-linear-gradient(bottom right, white, lightsteelblue); /* For Opera 11.1 to 12.0 */
-  background: -moz-linear-gradient(bottom right, white, lightsteelblue); /* For Firefox 3.6 to 15 */
-  background: linear-gradient(to bottom right, white, lightsteelblue); /* Standard syntax */
-}
-
-.moviePoolContainers .thumbnail {
-  margin-bottom: 0;
-}
-
-.poolHiddenRT {
-  color: transparent;
-  overflow: hidden;
-}
-
-.glyphicon-film {
-  color: blue;
-}
-
-.searchResults .thumbnail {
-  height: 400px;
-  position: relative;
+.navbar>.container-fluid .navbar-brand {
+  color: #252839;
+  text-shadow: .75px .75px 1px #677077;
 }
 
 .navbar-default .navbar-toggle{ 
@@ -120,14 +85,74 @@ body {
   width: 100%;
 }
 
-.yearStyle {
-  opacity: 0.7;
-  font-size: .8em;
+.navbar-default .navbar-nav>li>a {
+  padding-top: 25px;
 }
 
-.searchResultsMovieYear {
-  opacity: 0.7;
-  font-size: .8em;
+.dropdown-toggle {
+  border: none;
+  background: none;
+  padding-top: 0;
+}
+
+.navBarMovieButton {
+  padding: 0;
+  margin-top: 5px;
+}
+
+#logo {
+  padding-bottom: 20px;
+}
+
+/*SEARCH FORM*/
+
+.searchBar {
+  align-content: center;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.searchResultsTitle {
+  margin-top: 0;
+}
+
+.form-control {
+  margin: 0 auto;
+  width: 80%;
+}
+
+.input-group {
+  margin: 0 auto;
+  padding: 5px;
+  max-width: 400px;
+}
+
+.input-group button {
+  height: 34px;
+}
+
+/*SEARCH RESULTS*/
+
+.searchResults {
+  text-align: center;
+}
+
+.inPoolBackground {
+  background: #dadadb;
+  border: 0;
+}
+
+.searchResults .thumbnail {
+  border: 0;
+  height: 400px;
+  position: relative;
+  -webkit-box-shadow: 4px 4px 7px -1px rgba(0,0,0,0.2);
+  -moz-box-shadow: 4px 4px 7px -1px rgba(0,0,0,0.2);
+  box-shadow: 4px 4px 7px -1px rgba(0,0,0,0.2);
+}
+
+.searchResults .thumbnail .btn:first-of-type{
+  border-radius: 0;
 }
 
 .searchResultsButtons {
@@ -147,78 +172,120 @@ body {
   width: 100%;
 }
 
-.poolYear {
-  opacity: 0.7;
-  font-size: .8em;
+/*PROFILE*/
+.media {
+  border: 1px solid black; 
+  background: #f7f7f7; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left top, #f7f7f7, #dadadb); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right, #f7f7f7, #dadadb); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, #f7f7f7, #dadadb); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right, #f7f7f7, #dadadb); /* Standard syntax */
+  -webkit-box-shadow: 5px 4px 2px -3px rgba(255,255,255,.3);
+  -moz-box-shadow: 5px 4px 2px -3px rgba(255,255,255,.3);
+  box-shadow: 5px 4px 2px -3px rgba(255,255,255,.3);
 }
 
-.posterSearch {
-  min-height: 240px;
-	max-height: 240px;
-}
-
-.poster {
-  min-height: 240px;
-  max-height: 240px;
-}
-
-.posterSmall {
-  max-height: 320px;
-}
-
-.miniPoster {
-  max-height: 100px;
-}
-
-.userAuthForm {
-  text-align: center;
-}
-
-.page-header {
-  margin-top: 0;
-}
-
-.page-header h3 {
-  text-align: left;
+.profileSubHeader {
   padding-left: 16px;
-  margin-top: 0;
 }
 
-.userAuthForm .btn {
-  width: 120px;
-}
-
-.navbarPosterContainer {
-  /*max-width: 70%;*/
-  /*float: left;*/
-	/*height: 55px;*/
-}
-
-.navbarPosterContainer img {
-  /*padding-top: 3px;*/
-	height: 65px;
-  width: 42px;
--webkit-box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.3);
--moz-box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.3);
-box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.3);
-  /*position: absolute;*/
-  /*z-index: -1;*/
-}
-
-.navbarPosterContainer .dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.navbar-default .navbar-nav>li>a {
-  padding-top: 25px;
+.profileButtons .btn {
+  width: 172px;
+  border-radius: 0;
 }
 
 .profileProgress {
   width: 180px;
 }
 
+/*MOVIE POOL*/
+.moviePoolContainers {
+  padding: 0;
+  border: 1px solid rgba(0,0,0,0.5);
+  background: #f7f7f7; /* For browsers that do not support gradients */
+  background: -webkit-linear-gradient(left top, #f7f7f7, #dadadb); /* For Safari 5.1 to 6.0 */
+  background: -o-linear-gradient(bottom right, #f7f7f7, #dadadb); /* For Opera 11.1 to 12.0 */
+  background: -moz-linear-gradient(bottom right, #f7f7f7, #dadadb); /* For Firefox 3.6 to 15 */
+  background: linear-gradient(to bottom right, #f7f7f7, #dadadb); /* Standard syntax */
+}
+
+.moviePoolContainers .thumbnail {
+  border: 0;
+  border-radius: 0;
+  background: none;
+  margin-bottom: 0;
+}
+
+.poolHiddenRT {
+  color: transparent;
+  overflow: hidden;
+}
+
+.emptyPoolMessage {
+  text-align: center;
+}
+
+/*AUTH*/
+.userAuthForm {
+  text-align: center;
+  color: white;
+}
+
+.userAuthForm .btn {
+  width: 120px;
+}
+
+/*POSTER CONTROL*/
+.poster {
+  min-height: 240px;
+  max-height: 240px;
+  -webkit-box-shadow: 3px 3px 5px -1px rgba(0,0,0,0.7);
+  -moz-box-shadow: 3px 3px 5px -1px rgba(0,0,0,0.7);
+  box-shadow: 3px 3px 5px -1px rgba(0,0,0,0.7);
+}
+
+.posterSmall {
+  max-height: 320px;
+  -webkit-box-shadow: 3px 3px 5px -1px rgba(0,0,0,0.7);
+  -moz-box-shadow: 3px 3px 5px -1px rgba(0,0,0,0.7);
+  box-shadow: 3px 3px 5px -1px rgba(0,0,0,0.7);
+}
+
+.miniPoster {
+  max-height: 100px;
+  -webkit-box-shadow: 3px 3px 5px -1px rgba(0,0,0,0.5);
+  -moz-box-shadow: 3px 3px 5px -1px rgba(0,0,0,0.5);
+  box-shadow: 3px 3px 5px -1px rgba(0,0,0,0.5);
+}
+
+/*ADDITIONAL*/
+.yearStyle {
+  opacity: 0.7;
+  font-size: .8em;
+}
+
+.progressBarRed{
+  background: #FF1800;
+}
+
+.progressBarYellow{
+  background: #f2b632;
+}
+
+.progressBarBlue{
+  background: #1097FF;
+}
+
+.btn-danger {
+  background: #FF1800;
+}
+
+.btn-primary {
+  background: #1097FF;
+}
+
 .footerCredits {
+  color: #f7f7f7;
   padding-top: 20px;
   text-align: center;
   bottom: 10px;

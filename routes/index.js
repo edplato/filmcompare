@@ -4,7 +4,7 @@ var request = require('request');
 
 var Pool = require('../models/pool');
 var Movie = require('../models/movies');
-var Compared = require('../models/compared');
+var Saved = require('../models/saved');
 
 router.get('/', function(req, res, next) {
     var data;
@@ -40,7 +40,7 @@ router.get('/add-to-moviepool/:id', function(req, res, next) {
             if(!error && response.statusCode == 200) {
              var parsedbody = JSON.parse(body);
              if(error || !parsedbody["Response"] || parsedbody["Response"] === "False"){
-                req.flash('error', 'Error storing compared movies onto database.');
+                req.flash('error', 'Error storing movie onto database. Try again later.');
                 res.redirect("/");
              } else {
       
@@ -89,17 +89,14 @@ router.get('/watch-later/:id', isLoggedIn, function(req, res, next) {
     }
     var pool = new Pool(req.session.pool);
     var errMsg = req.flash('error')[0];
-
-    // res.render('watch-later', {total: pool.items, errMsg: errMsg, noMessages: !errMsg });
-    var compared = new Compared({
+    var saved = new Saved({
         user: req.user,
         pool: pool.items[movieId]
     });
-    compared.save(function(err, result) {
+    saved.save(function(err, result) {
         if(err){
-            req.flash('error', 'Error storing compared movies onto database.');
+            req.flash('error', 'Error storing movie onto database. Try again later.');
         }
-        req.flash('success', 'Successfully compared product!');
         req.session.pool = pool;
         res.redirect('/remove/' + movieId);
     });

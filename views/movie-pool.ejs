@@ -1,6 +1,5 @@
 <%- include('partials/header.ejs'); %>
 
-<!-- <p><a href="/" class="btn btn-primary" role="button">Go Back</a></p> -->
 <div class="container mainContainer">
 <% if(movies.length > 0) { %>
 <div class="row">
@@ -46,11 +45,11 @@
    <% calculatedRating = 100 }; %>
 
 <% if(calculatedRating >= 0 && calculatedRating <= 33) { %>
-		<% var progressBarClass = "progress-bar progress-bar-danger"; %>
+		<% var progressBarClass = "progress-bar progressBarRed"; %>
 	<% } else if(calculatedRating > 33 && calculatedRating <= 60) { %>
-		<% var progressBarClass = "progress-bar progress-bar-warning"; %>
+		<% var progressBarClass = "progress-bar progressBarYellow"; %>
 	<% } else if(calculatedRating > 60) { %>
-		<% var progressBarClass = "progress-bar progress-bar-success"; %>
+		<% var progressBarClass = "progress-bar progressBarBlue"; %>
 	<% }; %>
 
 	<% if(!movieMin.Poster || movieMin.Poster == 'N/A'){ %>
@@ -79,7 +78,7 @@
       </div></span></h6>
 
 	<% if(movieMin.Ratings[0]) { %>
-	<h6><strong>IMDB:</strong> <%= movieMin.Ratings[0].Value %><a href="http://www.imdb.com/title/<%= movieMin.imdbID %>/" class="btn btn-warning" role="button" target="_blank" style="float: right;">View IMDB</a></h6>
+	<h6><strong>IMDB:</strong> <%= movieMin.Ratings[0].Value %><a href="http://www.imdb.com/title/<%= movieMin.imdbID %>/" class="btn btn-default" role="button" target="_blank" style="float: right;">View IMDB</a></h6>
 	<% }; %>
 	<% if(movieMin.Ratings[1]) { %>
 	<h6><strong><%= movieMin.Ratings[1].Source %>:</strong> <%= movieMin.Ratings[1].Value %></h6>
@@ -107,7 +106,7 @@
       </div></span></h6>
 
 	<% if(movieMin.Ratings[0]) { %>
-	<h6><strong>IMDB:</strong> <%= movieMin.Ratings[0].Value %><a href="http://www.imdb.com/title/<%= movieMin.imdbID %>/" class="btn btn-warning" role="button" target="_blank" style="float: right;">View IMDB</a></h6>
+	<h6><strong>IMDB:</strong> <%= movieMin.Ratings[0].Value %><a href="http://www.imdb.com/title/<%= movieMin.imdbID %>/" class="btn btn-default" role="button" target="_blank" style="float: right;">View IMDB</a></h6>
 	<% }; %>
 	<% if(movieMin.Ratings[1]) { %>
 	<h6><strong><%= movieMin.Ratings[1].Source %>:</strong> <%= movieMin.Ratings[1].Value %></h6>
@@ -133,13 +132,13 @@
 	<h6><%= movieMin.Genre %></h6>
 	<h6>Runtime: <%= movieMin.Runtime %>  <span class="label label-default"><%= movieMin.Rated %></span>    </h6>
 	</div>
-
+	<hr>
 	<div>
 		<p><%= movieMin.Plot %> </p>
 		<h6><strong>Directed By:</strong> <%= movieMin.Director %> </h6>
 		<h6><strong>Written By:</strong> <%= movieMin.Writer %> </h6>
 		<h6><strong>Stars:</strong> <%= movieMin.Actors %> </h6>
-		<hr>
+		
 	</div>
   </div>
 
