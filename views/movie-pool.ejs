@@ -6,86 +6,34 @@
 	<div class="page-header">
 		<h3>Movie Pool</h3>
 	</div>
-<% movies.forEach(function(movie) { %>
-<% var movieMin = movie.movieDetails[0].detailBody %>
 
-<%	if(!movieMin.Metascore || movieMin.Metascore == 'N/A'){ %> 
-<%		var ratingMeta = 0; %>
-<%		} else { %>
-<%		var ratingMeta = Number(movieMin.Metascore) *.2; %>
-<%		}; %>
+  <% movies.forEach(function(movie) { %>
+  <% var movieMin = movie.movieDetails[0].detailBody %>
 
-<%	if(!movieMin.imdbRating || movieMin.imdbRating == 'N/A'){ %>
-<%		var ratingImdb = 0; %>
-<%		} else { %>
-<%		var ratingImdb = Number(movieMin.imdbRating) * 3; %>
-<%		}; %>
-
-<%	if(!movieMin.imdbVotes || movieMin.imdbVotes == 'N/A'){ %>
-<%		var ratingVotes = 0; %>
-<%		} else { %>
-<%		var ratingVotes = movieMin.imdbVotes; %>
-<%		ratingVotes = ratingVotes.replace( /,/g, "" ); %>
-<%		var votesLength = ratingVotes.length; %>
-<%		ratingVotes = Number(ratingVotes); %>
-<%		ratingVotes = Math.floor(ratingVotes / 100000);  %>
-<%		}; %>
-
-<%	if(movieMin.Ratings[1] == undefined || (!movieMin.Ratings[0] && !movieMin.Ratings[1])){ %>
-<%		var ratingRotten = 0; %>
-<%		} else { %>
-<%		var ratingRotten = movieMin.Ratings[1].Value; %>
-<%		ratingRotten = ratingRotten.slice(0, -1); %>
-<%		ratingRotten = Number(ratingRotten) *.5 ; %>
-<%		}; %>
-
-<% var calculatedRating = ((ratingMeta + ratingImdb + ratingVotes + ratingRotten)).toFixed(0); %> 
-
-<% if(calculatedRating > 100) { %>
-   <% calculatedRating = 100 }; %>
-
-<% if(calculatedRating >= 0 && calculatedRating <= 33) { %>
-		<% var progressBarClass = "progress-bar progressBarRed"; %>
-	<% } else if(calculatedRating > 33 && calculatedRating <= 60) { %>
-		<% var progressBarClass = "progress-bar progressBarYellow"; %>
-	<% } else if(calculatedRating > 60) { %>
-		<% var progressBarClass = "progress-bar progressBarBlue"; %>
-	<% }; %>
-
-	<% if(!movieMin.Poster || movieMin.Poster == 'N/A'){ %>
+	<% if(movieMin.poster_path == null){ %>
 		<% var poster = "http://s3.amazonaws.com/static.betaeasy.com/screenshot/456/456-25984-14192637741419263774.42.jpeg" %>
 	<% 	} else {  %>
-		<% var poster = movieMin.Poster %>
+		<% var poster = "https://image.tmdb.org/t/p/w300/" + movieMin.poster_path %>
 	<% }; %>
 
-<div class="container-fluid col-md-6 moviePoolContainers">
+  <div class="container-fluid col-md-6 moviePoolContainers">
 
-<div class="hidden-lg hidden-md hidden-sm visible-xs">	
-  <h5><strong><%= movieMin.Title %></strong> <span class="yearStyle">(<%= movieMin.Year %>)</span></h5>
-</div>
+  <div class="hidden-lg hidden-md hidden-sm visible-xs">	
+    <h5><strong><%= movieMin.title %></strong> <span class="yearStyle">(<%= movieMin.release_date.substr(0, 4) %>)</span></h5>
+  </div>
 
   	<div class="thumbnail col-sm-6 col-xs-12 visible-lg visible-md visible-sm hidden-xs"> <!-- thumbnail hidden xs -->
   	<img class="poster" src="<%= poster %>" alt="Movie Poster">
 
-  		<h6><strong>Flick Pick Meter:</strong>
-		  <span><div class="progress">
-  		<div class="<%= progressBarClass %>" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: <%= calculatedRating  %>%;">
-    	<%= calculatedRating  %>%
-  		</div>
-      </div></span></h6>
-
-    	<% if(movieMin.Ratings[0]) { %>
-    	<h6><strong>IMDB:</strong> <%= movieMin.Ratings[0].Value %><a href="http://www.imdb.com/title/<%= movieMin.imdbID %>/" class="btn btn-default" role="button" target="_blank" style="float: right;">View IMDB</a></h6>
-    	<% }; %>
-    	<% if(movieMin.Ratings[1]) { %>
-    	<h6><strong><%= movieMin.Ratings[1].Source %>:</strong> <%= movieMin.Ratings[1].Value %></h6>
+    	<% if(movieMin.imdb_id) { %> 
+    	 <h6 class="movieRating"><strong>MovieDB Pulse:</strong> <%= movieMin.popularity.toFixed(2) %><a href="http://www.imdb.com/title/<%= movieMin.imdb_id %>/" class="btn btn-default" role="button" target="_blank" style="float: right;">View IMDB</a></h6>
     	<% } else { %>
-    	<h6 class="poolHiddenRT"><strong>Rotten Tomatoes:</strong> 100%</h6>
-    	<% }; %>
+       <h6 class="movieRating"><strong>MovieDB Pulse:</strong> <%= movieMin.popularity.toFixed(2) %><a href="http://www.imdb.com/find?q=<%= movieMin.title %>" class="btn btn-default" role="button" target="_blank" style="float: right;">View IMDB</a></h6>
+      <% } %>
 
 	    <div class="btn-group-vertical searchResultsPoolButtons" role="group" aria-label="Buttons">      
-        <a href="/remove/<%=movie.movieDetails[0].imdbID%>" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Remove</a>
-        <a href="/watch-later/<%=movie.movieDetails[0].imdbID%>" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Add to Watch Later</a>
+        <a href="/remove/<%=movie.movieDetails[0].id%>" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Remove</a>
+        <a href="/watch-later/<%=movie.movieDetails[0].id%>" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Add to Watch Later</a>
       </div>
 
   	</div> <!-- thumbnail hidden xs -->
@@ -93,26 +41,15 @@
    <div class="thumbnail col-sm-6 hidden-lg hidden-md hidden-sm visible-xs"> <!-- thumbnail visible xs -->
    <img class="posterSmall" src="<%= poster %>" alt="Movie Poster">
 
-
-      <h6><strong>Flick Pick Meter:</strong>
-		  <span><div class="progress">
-  		<div class="<%= progressBarClass %>" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: <%= calculatedRating  %>%;">
-    	<%= calculatedRating  %>%
-  		</div>
-      </div></span></h6>
-
-    	<% if(movieMin.Ratings[0]) { %>
-    	<h6><strong>IMDB:</strong> <%= movieMin.Ratings[0].Value %><a href="http://www.imdb.com/title/<%= movieMin.imdbID %>/" class="btn btn-default" role="button" target="_blank" style="float: right;">View IMDB</a></h6>
-    	<% }; %>
-    	<% if(movieMin.Ratings[1]) { %>
-    	<h6><strong><%= movieMin.Ratings[1].Source %>:</strong> <%= movieMin.Ratings[1].Value %></h6>
-    	<% } else { %>
-    	<h6 class="poolHiddenRT"><strong>Rotten Tomatoes:</strong> 100%</h6>
-    	<% }; %>
+      <% if(movieMin.imdb_id) { %> 
+        <h6 class="movieRating"><strong>MovieDB Pulse:</strong> <%= movieMin.popularity.toFixed(2) %><a href="http://www.imdb.com/title/<%= movieMin.imdb_id %>/" class="btn btn-default" role="button" target="_blank" style="float: right;">View IMDB</a></h6>
+      <% } else { %>
+        <h6 class="movieRating"><strong>MovieDB Pulse:</strong> <%= movieMin.popularity.toFixed(2) %><a href="http://www.imdb.com/find?q=<%= movieMin.title %>" class="btn btn-default" role="button" target="_blank" style="float: right;">View IMDB</a></h6>
+      <% } %>
 
       <div class="btn-group-vertical searchResultsButtonsMin" role="group" aria-label="Buttons">      
-        <a href="/remove/<%=movie.movieDetails[0].imdbID%>" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Remove</a>
-        <a href="/watch-later/<%=movie.movieDetails[0].imdbID%>" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Add to Watch Later</a>
+        <a href="/remove/<%=movie.movieDetails[0].id%>" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Remove</a>
+        <a href="/watch-later/<%=movie.movieDetails[0].id%>" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>  Add to Watch Later</a>
       </div>
 
   </div> <!-- thumbnail visible xs -->
@@ -120,20 +57,37 @@
   <div class="col-sm-6 col-xs-12">
   <div class="searchMovieInfo">
    <div class="visible-lg visible-md visible-sm hidden-xs">
-   <h5><strong><%= movieMin.Title %></strong> <span class="yearStyle">(<%= movieMin.Year %>)</span></h5>
+   <h5><strong><%= movieMin.title %></strong> <span class="yearStyle">(<%= movieMin.release_date.substr(0, 4) %>)</span></h5>
    </div>
 
-   <h6><%= movieMin.Genre %></h6>
-	 <h6>Runtime: <%= movieMin.Runtime %>  <span class="label label-default"><%= movieMin.Rated %></span>    </h6>
+   <% if(movieMin.genres[0] != undefined){ %>
+    <h6><%= movieMin.genres[0].name %></h6>
+   <% } else {%>
+    <h6>See IMDB</h6>
+   <% } %>
+
+   <% if(movieMin.runtime !== null && movieMin.runtime > 0){%>
+	   <h6>Runtime: <%= movieMin.runtime %> min </h6>
+   <% } else { %>
+    <h6>Runtime: Not Listed </h6>
+   <% } %>  
 	</div>
 
 	<hr>
 
 	<div>
-		<p><%= movieMin.Plot %> </p>
-		<h6><strong>Directed By:</strong> <%= movieMin.Director %> </h6>
-		<h6><strong>Written By:</strong> <%= movieMin.Writer %> </h6>
-		<h6><strong>Stars:</strong> <%= movieMin.Actors %> </h6>
+    <% if(movieMin.overview !== null && movieMin.overview.length > 286) { %>
+      <%  var plotText = movieMin.overview.substr(0, 283) + '...'; %>
+    <% } else { %>
+      <%  var plotText = movieMin.overview; %>
+    <% }; %>
+
+		<p><%= plotText %> </p>
+
+    <% if(movieMin.overview === null || movieMin.imdb_id === null || movieMin.imdb_id === undefined || movieMin.imdb_id.length < 1) { %>
+      <p>Details may not be available, click the IMDB link to perform search</p>
+    <% } %>
+
 	</div>
   </div>
 

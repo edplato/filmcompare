@@ -1,6 +1,7 @@
 html {
   width: 100%;
   height: 100%;
+  min-width: 300px;
 }
 
 body {
@@ -153,7 +154,7 @@ h3 {
   margin: 20px auto;
   padding: 5px 0 0 0;
   border: 0;
-  height: 400px;
+  height: 350px;
   width: 90%;
   position: relative;
   -webkit-box-shadow: 4px 4px 7px -1px rgba(0,0,0,0.2);
@@ -196,19 +197,25 @@ h3 {
   padding-left: 16px;
 }
 
+.profileButtons {
+  display: inline-block;
+}
+
 .profileButtons .btn {
-  width: 172px;
+  min-width: 172px;
   border-radius: 0;
 }
 
-.profileProgress {
-  width: 180px;
+@media only screen and (max-width: 600px) {
+    .profileButtons .btn {
+      width: 100%;
+    }
 }
 
 /*MOVIE POOL*/
 .moviePoolContainers {
   padding: 0;
-  border: 1px solid rgba(0,0,0,0.5);
+  border: 5px solid #252839;
   background: #f7f7f7; /* For browsers that do not support gradients */
   background: -webkit-linear-gradient(left top, #f7f7f7, #dadadb); /* For Safari 5.1 to 6.0 */
   background: -o-linear-gradient(bottom right, #f7f7f7, #dadadb); /* For Opera 11.1 to 12.0 */
@@ -223,9 +230,9 @@ h3 {
   margin-bottom: 0;
 }
 
-.poolHiddenRT {
-  color: transparent;
-  overflow: hidden;
+.movieRating {
+  margin-bottom: 0;
+  line-height: 30px;
 }
 
 .emptyPoolMessage {
@@ -269,18 +276,6 @@ h3 {
 .yearStyle {
   opacity: 0.7;
   font-size: .8em;
-}
-
-.progressBarRed{
-  background: #FF1800;
-}
-
-.progressBarYellow{
-  background: #f2b632;
-}
-
-.progressBarBlue{
-  background: #1097FF;
 }
 
 .btn-danger {

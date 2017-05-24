@@ -10,75 +10,51 @@
 
 <%  saved.forEach(function(movie) { %>
 <%  var addedIndividualMovie = movie.pool.movieDetails[0].detailBody; %>
-<%	if(!addedIndividualMovie.Metascore || addedIndividualMovie.Metascore == 'N/A'){ %> 
-<%		var ratingMeta = 0; %>
-<%		} else { %>
-<%		var ratingMeta = Number(addedIndividualMovie.Metascore) *.2; %>
-<%		}; %>
 
-<%	if(!addedIndividualMovie.imdbRating || addedIndividualMovie.imdbRating == 'N/A'){ %>
-<%		var ratingImdb = 0; %>
-<%		} else { %>
-<%		var ratingImdb = Number(addedIndividualMovie.imdbRating) * 3; %>
-<%		}; %>
-
-<%	if(!addedIndividualMovie.imdbVotes || addedIndividualMovie.imdbVotes == 'N/A'){ %>
-<%		var ratingVotes = 0; %>
-<%		} else { %>
-<%		var ratingVotes = addedIndividualMovie.imdbVotes; %>
-<%		ratingVotes = ratingVotes.replace( /,/g, "" ); %>
-<%		var votesLength = ratingVotes.length; %>
-<%		ratingVotes = Number(ratingVotes); %>
-<%		ratingVotes = Math.floor(ratingVotes / 100000);  %>
-<%		}; %>
-
-<%	if(addedIndividualMovie.Ratings[1] == undefined || (!addedIndividualMovie.Ratings[0] && !addedIndividualMovie.Ratings[1])){ %>
-<%		var ratingRotten = 0; %>
-<%		} else { %>
-<%		var ratingRotten = addedIndividualMovie.Ratings[1].Value; %>
-<%		ratingRotten = ratingRotten.slice(0, -1); %>
-<%		ratingRotten = Number(ratingRotten) *.5 ; %>
-<%		}; %>
-
-<% var calculatedRating = ((ratingMeta + ratingImdb + ratingVotes + ratingRotten)).toFixed(0); %> 
-
-<% if(calculatedRating > 100) { %>
-   <% calculatedRating = 100 }; %>
-
-<% if(calculatedRating >= 0 && calculatedRating <= 33) { %>
-	<% var progressBarClass = "progress-bar progressBarRed"; %>
-<% } else if(calculatedRating > 33 && calculatedRating <= 60) { %>
-	<% var progressBarClass = "progress-bar progressBarYellow"; %>
-<% } else if(calculatedRating > 60) { %>
-	<% var progressBarClass = "progress-bar progressBarBlue"; %>
-<% }; %>
+  <% if(addedIndividualMovie.poster_path == null){ %>
+    <% var poster = "http://s3.amazonaws.com/static.betaeasy.com/screenshot/456/456-25984-14192637741419263774.42.jpeg" %>
+  <%  } else {  %>
+    <% var poster = "https://image.tmdb.org/t/p/w300/" + addedIndividualMovie.poster_path %>
+  <% }; %>
 
 	<div class="media">
     <div class="media-left">
-      <img class="media-object miniPoster" src="<%= addedIndividualMovie.Poster %>" alt="Movie Poster">
+      <img class="media-object miniPoster" src="<%= poster %>" alt="Movie Poster">
     </div>
 
     <div class="media-body">
-    <h5 class="media-heading"><strong><%= addedIndividualMovie.Title %></strong> <span class="yearStyle">(<%= addedIndividualMovie.Year %>)</span></h5>
+    <h5 class="media-heading"><strong><%= addedIndividualMovie.title %></strong> <span class="yearStyle">(<%= addedIndividualMovie.release_date.substr(0, 4) %>)</span></h5>
 
-    <h6><%= addedIndividualMovie.Genre %></h6>
-    <h6>Runtime: <%= addedIndividualMovie.Runtime %>  <span class="label label-default"><%= addedIndividualMovie.Rated %></span>    </h6>
-    <%= addedIndividualMovie.Plot %>
-	  <h6><strong>Flick Pick Meter:</strong>
-	    <span><div class="progress profileProgress">
-		  <div class="<%= progressBarClass %>" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: <%= calculatedRating %>%;">
-    	<%= calculatedRating  %>%
-		  </div>
-      </div></span>
-    </h6>
+    <% if(addedIndividualMovie.runtime !== null && addedIndividualMovie.runtime > 0){%>
+     <h6>Runtime: <%= addedIndividualMovie.runtime %> min </h6>
+    <% } else { %>
+     <h6>Runtime: Not Listed </h6>
+    <% } %>  
+
+
+    <% if(addedIndividualMovie.overview !== null && addedIndividualMovie.overview.length > 386) { %>
+      <%  var plotText = addedIndividualMovie.overview.substr(0, 383) + '...'; %>
+    <% } else { %>
+      <%  var plotText = addedIndividualMovie.overview; %>
+    <% }; %>
+
+    <p><%= plotText %> </p>
+
+    <% if(addedIndividualMovie.overview === null || addedIndividualMovie.imdb_id === null || addedIndividualMovie.imdb_id === undefined || addedIndividualMovie.imdb_id.length < 1) { %>
+      <p>Details may not be available, click the IMDB link to perform search</p>
+    <% } %>
 
     <div class="btn-group-horizontal profileButtons" role="group" aria-label="Buttons">
   
-      <a href="/add-to-moviepool/<%=addedIndividualMovie.imdbID%>" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add To Movie Pool</a>
-
+      <a href="/add-to-moviepool/<%=addedIndividualMovie.id%>" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add To Movie Pool</a>
       <a href="/user/delete-saved/<%=movie._id%>" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span> Remove</a>
   
-      <a href="http://www.imdb.com/title/<%=addedIndividualMovie.imdbID%>" class="btn btn-default" role="button" target="_blank">View IMDB</a>
+      <% if(addedIndividualMovie.imdb_id) { %> 
+        <a href="http://www.imdb.com/title/<%= addedIndividualMovie.imdb_id %>/" class="btn btn-default" role="button" target="_blank">View IMDB</a>
+      <% } else { %>
+        <a href="http://www.imdb.com/find?q=<%= addedIndividualMovie.title %>" class="btn btn-default" role="button" target="_blank">View IMDB</a>
+      <% } %>
+
     </div>
     </div>
   </div> <!-- media -->
