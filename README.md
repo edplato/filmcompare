@@ -1,12 +1,10 @@
 # Flick Pick - Movie Search
 
-+ NOTIFICATION: As of 5/20/2017, OMDB API has gone private. Now working to utilize a different movie API for the future version of this project.
-
 ## Features include:
 
-+ RESTful API to search through movies, obtain detailed information with Rotten Tomatoes, IMDB, and custom Flick Pick ratings
-+ User Authorization allows saving movies to watch later
-+ Movie queries obtained through OMDB API [http://www.omdbapi.com/][OMDB]
++ RESTful API to search through movies, obtain detailed information, IMDB links
++ User profile allows saving movies to watch later or just use the service anonymously without login
++ Movie queries obtained through The Movie DB [https://www.themoviedb.org/][themoviedb]
 
 ## Stack:
 
@@ -17,4 +15,4 @@
 + Bootstrap
 + JavaScript
 
-[OMDB]: http://www.omdbapi.com/
+[themoviedb]: https://www.themoviedb.org/
