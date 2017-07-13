@@ -18,7 +18,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/results', function(req, res, next) {
     var searchResult = req.query.search;
-    var url = "https://api.themoviedb.org/3/search/movie?api_key=&query=" + searchResult;
+    var url = "https://api.themoviedb.org/3/search/movie?api_key=2cae789d955254b964535238ad02041a&query=" + searchResult;
     request(url, function(error, response, body){
         if(!error && response.statusCode == 200) {
          var parsedbody = JSON.parse(body);
@@ -33,7 +33,7 @@ router.get('/results', function(req, res, next) {
 
 router.get('/add-to-moviepool/:id', function(req, res, next) {
     var movieId = req.params.id;
-    var url = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key=";
+    var url = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key=2cae789d955254b964535238ad02041a";
     var errMsg = req.flash('error')[0];
     request(url, function(error, response, body){
             if(!error && response.statusCode == 200) {
