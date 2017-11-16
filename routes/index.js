@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var request = require('request'); 
+var request = require('request');
 
 var Pool = require('../models/pool');
 var Movie = require('../models/movies');
@@ -44,7 +44,7 @@ router.get('/add-to-moviepool/:id', function(req, res, next) {
              } else {
     var pool = new Pool(req.session.pool ? req.session.pool : {});
     var movies = [
-        new Movie({ 
+        new Movie({
             id: movieId,
             detailBody: parsedbody
         })
